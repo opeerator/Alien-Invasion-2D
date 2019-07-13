@@ -2,6 +2,13 @@ import sys
 import pygame
 from bullet import Bullet
 
+def update_bullets(bullets):
+    """Update position of bullets and get rid of old bullets."""
+    bullets.update()
+    # Get rid of bullets that have disappeared.
+    for bullet in bullets.copy():
+            if bullet.rect.bottom <= 0:
+                    bullet.remove(bullets)
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     """Respond to key presses."""
@@ -12,8 +19,13 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         #Move the ship to the left.
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        #Create a new bullet and add it to the bullets group.
-        new_bullet = Bullet(ai_settings, screen, bullets)
+        fire_bullet(ai_settings, screen, ship, bullets)
+        
+def fire_bullet(ai_settings, screen, ship, bullets):
+    """Fire a bullet if limit not reached yet."""
+    #Create a new bullet and add it to the bullets group.
+    if len(bullets) < ai_settings.bullet_allowed:
+        new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
 
 def check_keyup_events(event, ai_settings, screen, ship, bullets):
