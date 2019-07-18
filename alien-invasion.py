@@ -5,6 +5,7 @@ from ship import Ship
 import game_functions as gf
 from game_stats import Gamestats
 from button import Button
+from scoreboard import Scoreboard
 
 def run_game():
     # Initialize game and create a screen object.
@@ -16,8 +17,9 @@ def run_game():
     # Make the play button.
     play_button = Button(ai_settings, screen, "Play")
     
-    # Create an instance to store game statistics.
+    # Create an instatnce to store game statistics and create a scoreboard.
     stats = Gamestats(ai_settings)
+    sb = Scoreboard(ai_settings, screen, stats)
 
     # Make a ship.
     ship = Ship(ai_settings, screen)
@@ -37,6 +39,6 @@ def run_game():
                 ship.update()
                 gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
                 gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
-        gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
         
 run_game()
