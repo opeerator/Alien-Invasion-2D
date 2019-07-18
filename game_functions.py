@@ -138,8 +138,9 @@ def check_bullet_alien_collision(ai_settings, screen, stats, sb, ship, aliens, b
         create_fleet(ai_settings, screen, ship, aliens)
     
     if collisions:
-        stats.score += ai_settings.alien_points
-        sb.prep_score()
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
+            sb.prep_score()
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     """Respond to key presses."""
