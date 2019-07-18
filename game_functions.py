@@ -131,6 +131,7 @@ def check_bullet_alien_collision(ai_settings, screen, ship, aliens, bullets):
     if len(aliens) == 0:
         # Destroy existing bullets and create new fleet.
         bullets.empty()
+        ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
